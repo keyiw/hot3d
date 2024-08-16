@@ -271,6 +271,7 @@ class Hot3DVisualizer:
         #
         ## Log Object poses
         #
+        print("timestamp", timestamp_ns)
         Hot3DVisualizer.log_object_poses(
             "world/objects",
             object_poses_with_dt,
@@ -517,6 +518,8 @@ class Hot3DVisualizer:
                 object_library_folderpath=object_library.asset_folder_name,
                 object_id=object_uid,
             )
+            
+            print("obj_uid", object_uid, "transl:", object_pose3d.T_world_object.translation(), "rot:", object_pose3d.T_world_object.rotation().to_quat())
 
             Hot3DVisualizer.log_pose(
                 f"world/objects/{object_name}",

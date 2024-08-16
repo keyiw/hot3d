@@ -18,6 +18,10 @@ from dataset_downloader_base import DatasetDownloaderBase
 
 from utils import load_data_groups_from_cdn, load_sequences_list_from_cdn
 
+# import sys
+# import os
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -26,8 +30,9 @@ def parse_args():
         "--cdn_file",
         dest="cdn_file",
         type=str,
-        required=True,
-        default=None,
+        required=False,
+        default= "Hot3DQuest_download_urls.json",
+        # default= "hot3d/hot3d/data_downloader/Hot3DQuest_download_urls.json",
         help="input file listing the CDN urls",
     )
 
@@ -36,7 +41,8 @@ def parse_args():
         "--output_folder",
         dest="output_folder",
         type=str,
-        required=True,
+        required=False,
+        default= "../dataset/quest",
         help="output folder for storing the downloaded dataset locally",
     )
 
@@ -58,7 +64,7 @@ def parse_args():
         dest="data_types",
         nargs="+",
         required=False,
-        default=[],
+        default=[1,2],
         help="""
         List (space separated) of data types to download for each sequence.
         To get a list of all data types available for this dataset, leave this blank and it will list all options.
@@ -88,8 +94,8 @@ def main():
         all_data_groups_list.remove("mps_slam_summary")
 
     # If sequence_names is specified as "all", retrieve all sequences from the CDN file
-    if len(args.sequence_names) == 1 and "all" in args.sequence_names:
-        args.sequence_names = load_sequences_list_from_cdn(args.cdn_file)
+    # if len(args.sequence_names) == 1 and "all" in args.sequence_names:
+    #     args.sequence_names = load_sequences_list_from_cdn(args.cdn_file)
 
     # If data_types are not specified, ask the user to specify one
     # If only one data type is available, automatically download it
